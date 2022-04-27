@@ -18,13 +18,6 @@ abstract class AbstractBalanceOperation
      */
     public function do(int $accountId, int $sum, string $reason, string $type)
     {
-        $accountOperation = new AccountOperation();
-        $accountOperation->type = $type;
-        $accountOperation->sum = $sum;
-        $accountOperation->reason = $reason;
-        $accountOperation->account_id = $accountId;
-        $accountOperation->save();
-
         $userAccount = UserAccount::findOrFail($accountId);
         if ($type == AccountOperation::TYPE_INCREMENT) {
             $userAccount->balance += $sum;
@@ -33,7 +26,16 @@ abstract class AbstractBalanceOperation
                 $userAccount->balance -= $sum;
             }
         }
+
         $userAccount->save();
+
+        $accountOperation = new AccountOperation();
+        $accountOperation->type = $type;
+        $accountOperation->sum = $sum;
+        $accountOperation->balance = $userAccount->balance;
+        $accountOperation->reason = $reason;
+        $accountOperation->account_id = $accountId;
+        $accountOperation->save();
     }
 
     /**

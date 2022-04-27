@@ -18,6 +18,7 @@ class CreateAccountOperationsTable extends Migration
             $table->integer('account_id');
             $table->enum('type', ['increment', 'decrement']);
             $table->integer('sum');
+            $table->integer('balance');
             $table->text('reason');
             $table->timestamp('executed_at')->default(now());
         });

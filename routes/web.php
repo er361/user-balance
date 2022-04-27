@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\Api\UserAccountApiController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\SiteController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,22 +16,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('main')->with('title', 'Главная');
-})->name('main');
+
+Route::get('/', [SiteController::class, 'index'])->name('main');
+Route::get('sign-in', [SiteController::class, 'signIn'])->name('sign-in');
+Route::get('logout', [LoginController::class, 'logout']);
+Route::get('balance-history', [SiteController::class, 'balanceHistory'])->name('balance-history');
 
 Route::post('authenticate', [LoginController::class, 'authenticate'])->name('authenticate');
-Route::get('sign-in', function () {
-    return view('sign-in')->with('title', 'Login');
-})->name('sign-in');
 
-Route::get('balance-history', function () {
-    return view('main')->with('title', 'История операции');
-})->name('balance-history');
-
-// Route::get('test',fn()=>Artisan::call('ub:decrement-balance',[
-//     'email' => 'sf7kmmr@gmail.com',
-//     'sum' => 111,
-//     'reason' => 'som'
-// ]));
+Route::get(
+    'lastFiveOperations',
+    [UserAccountApiController::class, 'getUserAccountLastFiveOperations']
+)->middleware('json');
 

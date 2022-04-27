@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('title',$title)
+
+
 @section('content')
     <body>
     <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
@@ -32,23 +34,31 @@
                     @if(URL::current() == route('balance-history')) text-blue-50 @else text-dark @endif
                         text-decoration-none" href="#">История операции</a>
 
-                    @auth
+                    @if(Auth::check())
                         <a class="me-3 py-2  btn btn-danger text-decoration-none" href="/logout">Выйти</a>
-                    @elseauth
+                    @else
                         <a class="me-3 py-2 btn btn-success text-decoration-none" href="/sign-in">Логин</a>
-                    @endauth
+                    @endif
 
                 </nav>
             </div>
         </header>
 
         <main>
-            <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
-                text
+            <div class="mb-3 text-center">
+                @auth
+                    <h2>Login: <b>{{Auth::user()->email}}</b></h2>
+                    <h2>Balance: <b>{{Auth::user()->account?->balance}}</b></h2>
+                    <div id="app">
+                        <user-balance-table></user-balance-table>
+                    </div>
+                @endauth
             </div>
         </main>
 
     </div>
+    <script src="{{ mix('/js/app.js') }}"></script>
     </body>
+
 @endsection
 
