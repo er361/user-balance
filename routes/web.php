@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,4 +18,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('test',fn()=>\Illuminate\Support\Facades\Artisan::call('ub:add-user'));
+Route::post('authenticate',[LoginController::class,'authenticate'])->name('authenticate');
+Route::get('sign-in',[LoginController::class,'signIn']);
