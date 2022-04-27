@@ -2,9 +2,9 @@
 
 namespace App\Console\Commands;
 
-use App\Models\User;
+use App\Actions\CreateUserAccountAction;
+use App\Actions\CreateUserAction;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class AddUser extends Command
@@ -38,7 +38,7 @@ class AddUser extends Command
      *
      * @return int
      */
-    public function handle()
+    public function handle(CreateUserAction $createUserAction, CreateUserAccountAction $createUserAccountAction)
     {
         $email = $this->ask('Email');
         $password = $this->ask('Password');
@@ -49,17 +49,22 @@ class AddUser extends Command
         if ($validator->fails()) {
             $this->displayErrors($validator);
         } else {
-            if (User::whereEmail($email)->exists()) {
-                $this->error(sprintf('Email %s already exists', $email));
-                return 0;
+            try {
+                \DB::beginTransaction();
+                $user = $createUserAction->execute($email, $password);
+                //если нет кошелька создаем пустой (иначе будет ошибка при операциях с балансом)
+                if (! $user->account) {
+                    $createUserAccountAction->execute($user->id, 0);
+                }
+                \DB::commit();
+            } catch (\Exception $exception) {
+                \DB::rollBack();
+                $this->error($exception->getMessage());
+                return -1;
             }
-
-            User::create([
-                'email'    => $email,
-                'password' => Hash::make($password),
-            ]);
             $this->info('User created successfully');
         }
+        return 0;
     }
 
     /**

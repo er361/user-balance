@@ -15,8 +15,21 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('main')->with('title', 'Главная');
+})->name('main');
 
-Route::post('authenticate',[LoginController::class,'authenticate'])->name('authenticate');
-Route::get('sign-in',[LoginController::class,'signIn']);
+Route::post('authenticate', [LoginController::class, 'authenticate'])->name('authenticate');
+Route::get('sign-in', function () {
+    return view('sign-in')->with('title', 'Login');
+})->name('sign-in');
+
+Route::get('balance-history', function () {
+    return view('main')->with('title', 'История операции');
+})->name('balance-history');
+
+// Route::get('test',fn()=>Artisan::call('ub:decrement-balance',[
+//     'email' => 'sf7kmmr@gmail.com',
+//     'sum' => 111,
+//     'reason' => 'som'
+// ]));
+
