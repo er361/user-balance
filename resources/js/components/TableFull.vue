@@ -27,18 +27,15 @@ export default {
             try {
                 let res = await axios
                     .get(`getUserAccountOperations?sortOrder=${order}&search=${search}`);
-                console.log(res)
                 this.operations = res.data.data;
             } catch (e) {
                 console.error(e)
             }
         },
         sort(order) {
-            console.log('sorting', order)
             this.loadFullOperationsData(order)
         },
         search(text) {
-            console.log(text)
             this.loadFullOperationsData('desc', text)
         },
 

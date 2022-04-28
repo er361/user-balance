@@ -22,7 +22,6 @@ export default {
         async oneTimeLoad() {
             try {
                 let res = await axios.get('lastFiveOperations');
-                console.log(res)
                 this.operations = res.data.data;
             } catch (e) {
                 console.error(e)

@@ -59,7 +59,6 @@ export default {
     emits: ['sortByTime', 'search'],
     watch: {
         operations: function (newVal, oldVal) { // watch it
-            console.log('Prop changed: ', newVal, ' | was: ', oldVal)
             this.loading = false;
         }
     },
@@ -67,7 +66,6 @@ export default {
         sendSortEvent() {
             this.changeOrder();
             this.$emit('sortByTime', this.sortOrder)
-            console.log('emit', this.sortOrder)
         },
         changeOrder() {
             if (this.sortOrder === 'desc')
@@ -78,7 +76,6 @@ export default {
         handleSearchEvent() {
             this.loading = true
             setTimeout(() => {
-                console.log(this.searchText)
                 this.$emit('search', this.searchText)
             }, 1000)
         }
