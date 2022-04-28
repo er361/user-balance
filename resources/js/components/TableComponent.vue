@@ -1,37 +1,44 @@
 <template>
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th>Тип операции</th>
-            <th>Сумма</th>
-            <th>Баланс</th>
-            <th v-if="search"> Описание <input v-model="searchText"
-                                               class="form-control"
-                                               placeholder="Поиск по описанию"
-                                               type="text"
-                                               @keyup="handleSearchEvent">
-            </th>
-            <th v-else>Описание</th>
+    <div>
+        <div>
+            <input
+                v-model="searchText"
+                class="form-control"
+                placeholder="Поиск по описанию..."
+                type="text"
+                @keyup="handleSearchEvent"
+            >
 
-            <th v-if="sort" class="hoverable" @click="sendSortEvent">Время |
-                <span class="text-success">Sort:{{ this.sortOrder }}</span>
-            </th>
-            <th v-else>Время</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr v-if="loading">Loading...</tr>
-        <tr v-for="(operation,index) in operations" v-else>
-            <th scope="row">{{ ++index }}</th>
-            <td>{{ operation.type }}</td>
-            <td>{{ operation.sum }}</td>
-            <td>{{ operation.balance }}</td>
-            <td>{{ operation.reason }}</td>
-            <td>{{ operation.executed_at }}</td>
-        </tr>
-        </tbody>
-    </table>
+        </div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th>Тип операции</th>
+                <th>Сумма</th>
+                <th>Баланс</th>
+                <th>Описание</th>
+
+                <th v-if="sort" class="hoverable" @click="sendSortEvent">Время |
+                    <span class="text-success">Sort:{{ this.sortOrder }}</span>
+                </th>
+                <th v-else>Время</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-if="loading">Loading...</tr>
+            <tr v-for="(operation,index) in operations" v-else>
+                <th scope="row">{{ ++index }}</th>
+                <td>{{ operation.type }}</td>
+                <td>{{ operation.sum }}</td>
+                <td>{{ operation.balance }}</td>
+                <td>{{ operation.reason }}</td>
+                <td>{{ operation.executed_at }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
 </template>
 <script>
 export default {
