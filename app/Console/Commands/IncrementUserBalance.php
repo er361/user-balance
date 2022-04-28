@@ -2,8 +2,9 @@
 
 namespace App\Console\Commands;
 
-use App\Actions\IncrementUserBalanceAction;
 use App\Console\Commands\Abstracts\UserBalanceOperationCommand;
+use App\Jobs\IncrementUserBalanceJob;
+use App\Models\User;
 
 class IncrementUserBalance extends UserBalanceOperationCommand
 {
@@ -30,8 +31,14 @@ class IncrementUserBalance extends UserBalanceOperationCommand
      *
      * @return int
      */
-    public function handle(IncrementUserBalanceAction $action)
+    public function handle()
     {
-        parent::do($action);
+        $user = User::whereEmail($this->argument('email'))->firstOrFail();
+
+        IncrementUserBalanceJob::dispatch(
+            $user->account->id,
+            $this->argument('sum'),
+            $this->argument('reason')
+        )->onQueue('balance');
     }
 }

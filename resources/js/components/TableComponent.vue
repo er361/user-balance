@@ -68,6 +68,9 @@ export default {
                 this.sortOrder = 'desc'
         },
         handleSearchEvent() {
+            if (this.searchText.length === 0)
+                return;
+
             this.loading = true
             setTimeout(() => {
                 console.log(this.searchText)
