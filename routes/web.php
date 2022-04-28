@@ -25,7 +25,7 @@ Route::get('balance-history', [SiteController::class, 'balanceHistory'])->name('
 Route::post('authenticate', [LoginController::class, 'authenticate'])->name('authenticate');
 
 
-Route::group(['middleware' => 'json'], function () {
+Route::group(['middleware' => ['json', 'auth']], function () {
     Route::get('lastFiveOperations', [UserAccountApiController::class, 'getUserAccountLastFiveOperations']);
     Route::get('getUserAccountOperations', [UserAccountApiController::class, 'getUserAccountOperations']);
 });

@@ -18,8 +18,12 @@
                 @auth
                     <h2>Login: <b>{{Auth::user()->email}}</b></h2>
                     <h2>Balance: <b>{{Auth::user()->account?->balance}}</b></h2>
-                        <user-balance-table></user-balance-table>
+                    <user-balance-table></user-balance-table>
                 @endauth
+
+                @guest
+                    <p>Неавторизованный пользователь, сделайте вход чтобы увидеть данные.</p>
+                @endguest
             </div>
         </main>
 
