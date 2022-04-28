@@ -1,33 +1,12 @@
 <template>
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th>Тип операции</th>
-            <th>Сумма</th>
-            <th>Баланс</th>
-            <th>Описание</th>
-            <th>Время</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr v-for="(operation,index) in operations">
-            <th scope="row">{{ ++index }}</th>
-            <td>{{ operation.type }}</td>
-            <td>{{ operation.sum }}</td>
-            <td>{{ operation.balance }}</td>
-            <td>{{ operation.reason }}</td>
-            <td>{{ operation.executed_at }}</td>
-        </tr>
-        </tbody>
-
-
-    </table>
-
+    <table-component :operations="operations"/>
 </template>
 
 <script>
+import TableComponent from "./TableComponent";
+
 export default {
+    components: {TableComponent},
     data() {
         return {
             operations: []
@@ -44,7 +23,7 @@ export default {
             try {
                 let res = await axios.get('lastFiveOperations');
                 console.log(res)
-                this.operations = res.data;
+                this.operations = res.data.data;
             } catch (e) {
                 console.error(e)
             }

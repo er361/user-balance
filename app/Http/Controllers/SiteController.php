@@ -18,6 +18,6 @@ class SiteController extends Controller
 
     public function balanceHistory()
     {
-        return view('main')->with('title', 'История операции');
+        return view('balance-history')->with('title', 'История операции');
     }
 }
