@@ -26,7 +26,7 @@ class OperationsListRequest extends FormRequest
         return [
             //
             'sortOrder' => 'string',
-            'search'    => 'string',
+            'search'    => 'string|nullable',
         ];
     }
 }
