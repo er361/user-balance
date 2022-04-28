@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div>
+        <div v-if="search">
             <input
                 v-model="searchText"
                 class="form-control"
@@ -19,8 +19,9 @@
                 <th>Баланс</th>
                 <th>Описание</th>
 
-                <th v-if="sort" class="hoverable" @click="sendSortEvent">Время |
-                    <span class="text-success">Sort:{{ this.sortOrder }}</span>
+                <th v-if="sort" class="hoverable" @click="sendSortEvent">Время
+                    <font-awesome-icon v-if="this.sortOrder == 'desc'" icon="fa-solid fa-arrow-down"/>
+                    <font-awesome-icon v-else="this.sortOrder == 'asc'" icon="fa-solid fa-arrow-up"/>
                 </th>
                 <th v-else>Время</th>
             </tr>
@@ -75,9 +76,6 @@ export default {
                 this.sortOrder = 'desc'
         },
         handleSearchEvent() {
-            if (this.searchText.length === 0)
-                return;
-
             this.loading = true
             setTimeout(() => {
                 console.log(this.searchText)

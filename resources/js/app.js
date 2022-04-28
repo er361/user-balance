@@ -5,7 +5,11 @@
  */
 
 require('./bootstrap');
+import {library} from '@fortawesome/fontawesome-svg-core'
+import {faArrowDown, faArrowUp} from '@fortawesome/free-solid-svg-icons'
+import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
 
+library.add(faArrowDown, faArrowUp)
 window.Vue = require('vue').default;
 
 /**
@@ -21,6 +25,7 @@ window.Vue = require('vue').default;
 
 Vue.component('user-balance-table', require('./components/Table.vue').default);
 Vue.component('user-balance-table-full', require('./components/TableFull.vue').default);
+Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
