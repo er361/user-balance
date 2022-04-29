@@ -2,11 +2,11 @@
 
 namespace App\Console\Commands;
 
-use App\Console\Commands\Abstracts\UserBalanceOperationCommand;
 use App\Jobs\IncrementUserBalanceJob;
 use App\Models\User;
+use Illuminate\Console\Command;
 
-class IncrementUserBalance extends UserBalanceOperationCommand
+class IncrementUserBalance extends Command
 {
     protected $signature = 'ub:increment-balance {email}{sum}{reason}';
     /**

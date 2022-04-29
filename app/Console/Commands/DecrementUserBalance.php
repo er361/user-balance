@@ -2,11 +2,11 @@
 
 namespace App\Console\Commands;
 
-use App\Console\Commands\Abstracts\UserBalanceOperationCommand;
 use App\Jobs\DecrementUserBalanceJob;
 use App\Models\User;
+use Illuminate\Console\Command;
 
-class DecrementUserBalance extends UserBalanceOperationCommand
+class DecrementUserBalance extends Command
 {
     protected $signature = 'ub:decrement-balance {email}{sum}{reason}';
     /**
